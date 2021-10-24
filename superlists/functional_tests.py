@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
+import time
 
 class NewVisitorTest(unittest.TestCase):
 
@@ -20,11 +21,13 @@ class NewVisitorTest(unittest.TestCase):
     self.assertEqual(inputbox.get_attribute('placeholder'),'Wpisz rzecz do zrobienia')
     inputbox.send_keys('Kupić pawie pióra')
     inputbox.send_keys(Keys.ENTER)
+    inputbox = self.browser.find_element_by_id('id_new_item')
+    inputbox.send_keys('Użyc pawich piór do zrobienia przynęty')
+    inputbox.send_keys(Keys.ENTER)
     table = self.browser.find_element_by_id('id_list_table')
     rows = table.find_elements_by_tag_name('tr')
-    self.assertTrue(
-      any(row.text == '1: Kupić pawie pióra' for row in rows),"Nowy element nie znajduje się w tabeli"
-    )
+    self.assertIn('1: Kupić pawie pióra', [row.text for row in rows])
+    self.assertIn('2: Użyc pawich piór do zrobienia przynęty', [row.text for row in rows])
     self.fail('Zakonczenie testu')
     
 
