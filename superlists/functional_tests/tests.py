@@ -1,9 +1,9 @@
 from selenium import webdriver
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 import unittest
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
   def setUp(self):
     self.browser = webdriver.Chrome()
@@ -21,7 +21,7 @@ class NewVisitorTest(LiveServerTestCase):
     self.browser.get(self.live_server_url)
     self.assertIn('Listy', self.browser.title)
     header_text = self.browser.find_element_by_tag_name('h1').text
-    self.assertIn('lista', header_text)
+    self.assertIn('listę', header_text)
     inputbox = self.browser.find_element_by_id('id_new_item')
     self.assertEqual(inputbox.get_attribute('placeholder'),'Wpisz rzecz do zrobienia')
     inputbox.send_keys('Kupić pawie pióra')
