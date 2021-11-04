@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-dacjs&5pb%+ouz^dmnurfq=4cdbo5*)d8zp#^6v787&ginl49*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['moja-witryna.pl','localhost:8000','localhost']
+ALLOWED_HOSTS = ['3.142.230.220','moja-witryna.pl','localhost:8000','localhost']
 # http://18.188.98.52/
 
 # Application definition
