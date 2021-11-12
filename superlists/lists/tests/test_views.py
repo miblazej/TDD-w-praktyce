@@ -52,7 +52,7 @@ class ListViewTest(TestCase):
     other_list = List.objects.create()
     correct_list = List.objects.create()
 
-    self.client.post('/lists/%d/add_item' % (correct_list.id,), data={'item_text':'Nowy element dla istniejącej listy'})
+    self.client.post('/lists/%d/' % (correct_list.id,), data={'item_text':'Nowy element dla istniejącej listy'})
 
     self.assertEqual(Item.objects.count(), 1)
     new_item = Item.objects.first()
@@ -89,6 +89,13 @@ class ListViewTest(TestCase):
     self.assertEqual(List.objects.count(),0)
     self.assertEqual(Item.objects.count(),0)
 
+  def test_validation_errors_end_up_on_lists_page(self):
+    list_ = List.objects.create()
+    response = self.client.post('/lists/%d/' % (list_.id), data={'item_text': ''})
+    self.assertEqual(response.status_code, 200)
+    self.assertTemplateUsed(response, 'list.html')
+    expected_error = escape("Element nie może być pusty")
+    self.assertContains(response, expected_error)
 
 
   
