@@ -13,18 +13,13 @@ def home_page(request):
 @csrf_exempt
 def view_list(request, list_id):
   list_ = List.objects.get(id=list_id)
-  error = None
-
+  form = ItemForm()
   if request.method == 'POST':
-    try:
-      item = Item(text=request.POST['text'], list=list_)
-      item.full_clean()
-      item.save()
+    form = ItemForm(data=request.POST)
+    if form.is_valid():
+      Item.objects.create(text=request.POST['text'], list = list_)
       return redirect(list_)
-    except ValidationError:
-      error = EMPTY_LIST_ERROR
-      
-  return render(request, 'list.html', {'list':list_, 'error': error,"form":ItemForm()})
+  return render(request, 'list.html',{'list':list_,"form":form})
 
 @csrf_exempt
 def new_list(request):
