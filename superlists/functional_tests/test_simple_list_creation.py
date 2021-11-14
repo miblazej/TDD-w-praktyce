@@ -11,14 +11,14 @@ class NewVisitorTest(FunctionalTest):
     self.assertIn('Listy', self.browser.title)
     header_text = self.browser.find_element(By.TAG_NAME,'h1').text
     self.assertIn('listę', header_text)
-    inputbox = self.browser.find_element(By.ID,'id_new_item')
-    self.assertEqual(inputbox.get_attribute('placeholder'),'Wpisz rzecz do zrobienia')
+    inputbox = self.get_item_input_box()
+    self.assertEqual(inputbox.get_attribute('placeholder'),'Wpisz rzeczy do zrobienia')
     inputbox.send_keys('Kupić pawie pióra')
     inputbox.send_keys(Keys.ENTER)
     edith_list_url = self.browser.current_url
     self.assertRegex(edith_list_url, '/lists/.+')
     self.check_for_row_in_list_table('1: Kupić pawie pióra')
-    inputbox = self.browser.find_element_by_id('id_new_item')
+    inputbox = self.get_item_input_box()
     inputbox.send_keys('Użyc pawich piór do zrobienia przynęty')
     inputbox.send_keys(Keys.ENTER)
     self.check_for_row_in_list_table('2: Użyc pawich piór do zrobienia przynęty')
@@ -30,7 +30,7 @@ class NewVisitorTest(FunctionalTest):
     self.assertNotIn('Kupić pawie pióra',page_text)
     self.assertNotIn('zrobienia przynęty',page_text)
 
-    inputbox = self.browser.find_element(By.ID, 'id_new_item')
+    inputbox = self.get_item_input_box()
     inputbox.send_keys('Kupić mleko')
     inputbox.send_keys(Keys.ENTER)
 
